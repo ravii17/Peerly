@@ -1,105 +1,110 @@
-import { Link } from 'react-router-dom'
-
-function GlassCard({ children, className = '' }) {
-  return (
-    <div
-      className={[
-        'rounded-2xl border border-white/20 bg-white/10 p-6 shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)] backdrop-blur-lg',
-        className,
-      ].join(' ')}
-    >
-      {children}
-    </div>
-  )
-}
-
-function GlassButton({ to, children, variant = 'primary' }) {
-  const base =
-    'inline-flex w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition active:scale-[0.99] sm:w-auto'
-  const styles =
-    variant === 'ghost'
-      ? 'border border-white/25 bg-white/10 hover:bg-white/15'
-      : 'bg-white text-slate-900 hover:bg-white/90'
-  return (
-    <Link className={[base, styles].join(' ')} to={to}>
-      {children}
-    </Link>
-  )
-}
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { MessageSquare, Video, UserCircle, Activity } from 'lucide-react';
+import FeatureCard from '../components/FeatureCard';
 
 export default function HomePage() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
+
   return (
-    <main className="mx-auto flex min-h-screen max-w-6xl items-center px-4 py-12">
-      <div className="grid w-full items-center gap-8 lg:grid-cols-2">
-        <div className="space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs text-white/90 backdrop-blur-lg">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.8)]" />
+    <main className="mx-auto flex min-h-screen max-w-6xl items-center px-4 pt-32 pb-20">
+      <div className="grid w-full items-center gap-16 lg:grid-cols-2">
+        
+        {/* Left Section - Hero */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="space-y-8"
+        >
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white/80 backdrop-blur-xl shadow-inner">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
             Connect students ↔ professionals in real-time
-          </div>
-          <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            ConnectHub
-          </h1>
-          <p className="max-w-xl text-pretty text-white/75">
-            A modern, glassmorphism-first network where students and working
-            professionals can chat and hop on instant video calls.
-          </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <GlassButton to="/login/student">Login as Student</GlassButton>
-            <GlassButton to="/login/professional">
-              Login as Professional
-            </GlassButton>
-            <GlassButton variant="ghost" to="/register/student">
-              Register
-            </GlassButton>
-          </div>
-          <p className="text-xs text-white/60">
-            Tip: You can register as student or professional and edit your
-            profile later.
-          </p>
-        </div>
-
-        <GlassCard className="p-7">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <div className="text-sm font-semibold">Why ConnectHub?</div>
-                <div className="text-xs text-white/60">
-                  Designed for mentoring, referrals, and collaboration.
-                </div>
-              </div>
-              <div className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs text-white/80">
-                Glass UI
-              </div>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                ['1-to-1 Chat', 'Socket.io real-time messaging'],
-                ['Presence', 'Online / offline awareness'],
-                ['Video Calls', 'WebRTC peer-to-peer'],
-                ['Profiles', 'College / company + bio'],
-              ].map(([title, desc]) => (
-                <div
-                  key={title}
-                  className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-lg transition hover:bg-white/15"
-                >
-                  <div className="text-sm font-semibold">{title}</div>
-                  <div className="mt-1 text-xs text-white/65">{desc}</div>
-                </div>
+          </motion.div>
+          
+          <motion.h1 variants={itemVariants} className="text-balance text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+            Connect Students & <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Professionals</span> Seamlessly
+          </motion.h1>
+          
+          <motion.p variants={itemVariants} className="max-w-xl text-pretty text-lg text-white/60 leading-relaxed">
+            A premium network designed for the modern era. Find mentors, get referrals, and collaborate instantly through high-quality chat and video calls.
+          </motion.p>
+          
+          <motion.div variants={itemVariants} className="flex flex-col gap-4 sm:flex-row">
+            <Link
+              to="/register/student"
+              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all hover:scale-105 hover:shadow-indigo-500/40 active:scale-95"
+            >
+              Get Started
+            </Link>
+            <Link
+              to="/login/student"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-lg transition-all hover:bg-white/10 hover:border-white/20 active:scale-95"
+            >
+              Login
+            </Link>
+          </motion.div>
+          
+          <motion.div variants={itemVariants} className="flex items-center gap-4 pt-4">
+            <div className="flex -space-x-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-8 w-8 rounded-full border-2 border-[#070A12] bg-gradient-to-br from-indigo-400 to-purple-400" />
               ))}
             </div>
+            <p className="text-xs font-medium text-white/60">
+              Trusted by 10,000+ users worldwide
+            </p>
+          </motion.div>
+        </motion.div>
 
-            <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-4">
-              <div className="text-sm font-semibold">Next up</div>
-              <div className="mt-1 text-xs text-white/65">
-                I’ll add the dashboard, chat UI, and the video call screen after
-                auth + API are live.
-              </div>
-            </div>
-          </div>
-        </GlassCard>
+        {/* Right Section - Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 relative">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-transparent blur-3xl opacity-50 rounded-full" />
+          
+          <FeatureCard 
+            icon={MessageSquare} 
+            title="1-to-1 Chat" 
+            description="Ultra-fast WebSocket messaging for seamless conversations and knowledge sharing."
+            delay={0.4}
+          />
+          <FeatureCard 
+            icon={Activity} 
+            title="Live Presence" 
+            description="Know exactly who is online and ready to collaborate with real-time status indicators."
+            delay={0.5}
+          />
+          <FeatureCard 
+            icon={Video} 
+            title="HD Video Calls" 
+            description="Crystal clear WebRTC peer-to-peer video calls right inside your browser."
+            delay={0.6}
+          />
+          <FeatureCard 
+            icon={UserCircle} 
+            title="Rich Profiles" 
+            description="Showcase your background, skills, and current company to attract the right connections."
+            delay={0.7}
+          />
+        </div>
       </div>
     </main>
-  )
+  );
 }
 
