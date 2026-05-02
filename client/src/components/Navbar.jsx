@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
 
 function NavLink({ to, children, isHovered, onHover }) {
@@ -41,6 +41,12 @@ function NavLink({ to, children, isHovered, onHover }) {
 
 export default function Navbar() {
   const [hoveredPath, setHoveredPath] = useState(null);
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   const links = [
     { name: 'Features', path: '#features' },
@@ -55,7 +61,16 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4"
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-6 py-3 shadow-lg backdrop-blur-lg">
+      <motion.div 
+        animate={{
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.03)',
+          borderColor: isScrolled ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: isScrolled ? 'blur(20px)' : 'blur(10px)',
+          boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 4px 30px rgba(0, 0, 0, 0)',
+        }}
+        transition={{ duration: 0.3 }}
+        className="mx-auto flex max-w-6xl items-center justify-between rounded-2xl border px-6 py-3"
+      >
         <Link to="/" className="flex items-center gap-2 group">
           <motion.div 
             whileHover={{ scale: 1.1, rotate: 5 }}
@@ -101,7 +116,7 @@ export default function Navbar() {
             </Link>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </motion.nav>
   );
 }
