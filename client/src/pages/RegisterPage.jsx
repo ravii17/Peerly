@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 
 function GlassShell({ children }) {
   return (
-    <div className="mx-auto flex min-h-screen max-w-6xl items-center px-4 py-12">
+    <div className="mx-auto flex min-h-screen max-w-6xl items-center px-4 pt-32 pb-20">
       <div className="w-full">
         <div className="mx-auto max-w-md rounded-2xl border border-white/20 bg-white/10 p-6 shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)] backdrop-blur-lg">
           {children}
