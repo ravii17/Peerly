@@ -27,19 +27,25 @@ export default function RegisterPage() {
   const [org, setOrg] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
 
   async function onSubmit(e) {
     e.preventDefault()
     setError('')
+    setIsSuccess(false)
     setIsLoading(true)
 
     try {
-      // Backend wiring comes next; for now just show UI works.
-      await new Promise((r) => setTimeout(r, 600))
-      navigate(`/login/${normalizedRole}`, { replace: true })
+      // Simulate backend registration call
+      await new Promise((r) => setTimeout(r, 800))
+      setIsSuccess(true)
+      
+      // Wait for user to read the success message before redirecting
+      setTimeout(() => {
+        navigate(`/login/${normalizedRole}`, { replace: true })
+      }, 1500)
     } catch (err) {
       setError('Registration failed. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
@@ -107,6 +113,12 @@ export default function RegisterPage() {
         {error ? (
           <div className="rounded-2xl border border-rose-400/30 bg-rose-500/15 px-4 py-3 text-sm text-rose-100">
             {error}
+          </div>
+        ) : null}
+
+        {isSuccess ? (
+          <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100">
+            Account created successfully! Redirecting to login...
           </div>
         ) : null}
 

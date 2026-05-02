@@ -53,7 +53,7 @@ export default function LoginPage() {
 
       <form className="mt-6 space-y-4" onSubmit={onSubmit}>
         <label className="block space-y-1">
-          <div className="text-xs font-medium text-white/70">Email</div>
+          <div className="text-xs font-medium text-white/70">Email ID</div>
           <input
             className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm outline-none backdrop-blur-lg placeholder:text-white/35 focus:border-white/30"
             placeholder="you@example.com"
