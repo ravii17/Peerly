@@ -76,10 +76,10 @@ export default function Navbar() {
             whileHover={{ scale: 1.1, rotate: 5 }}
             className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-inner group-hover:shadow-[0_0_15px_rgba(168,85,247,0.6)] transition-all"
           >
-            <span className="font-bold text-white">C</span>
+            <span className="font-bold text-white">P</span>
           </motion.div>
           <span className="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-purple-200">
-            ConnectHub
+            Peerly
           </span>
         </Link>
 

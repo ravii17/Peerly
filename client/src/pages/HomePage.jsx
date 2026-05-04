@@ -110,7 +110,7 @@ export default function HomePage() {
         <div className="absolute left-0 top-0 -z-10 bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl opacity-30 h-full w-1/2" />
         <ScrollReveal className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Loved by our community</h2>
-          <p className="text-white/60 max-w-2xl mx-auto">See what students and professionals are saying about their experience on ConnectHub.</p>
+          <p className="text-white/60 max-w-2xl mx-auto">See what students and professionals are saying about their experience on Peerly.</p>
         </ScrollReveal>
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -118,7 +118,7 @@ export default function HomePage() {
             {
               name: "Sarah Jenkins",
               role: "Software Engineer @ Google",
-              text: "ConnectHub made it incredibly easy for me to give back. The HD video calls are crystal clear and the scheduling is seamless."
+              text: "Peerly made it incredibly easy for me to give back. The HD video calls are crystal clear and the scheduling is seamless."
             },
             {
               name: "David Chen",

@@ -4,10 +4,10 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 md:flex-row">
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
-            <span className="text-xs font-bold text-white">C</span>
+            <span className="text-xs font-bold text-white">P</span>
           </div>
           <span className="text-sm font-semibold tracking-tight text-white">
-            ConnectHub
+            Peerly
           </span>
         </div>
         
@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
 
         <div className="text-xs text-white/40">
-          &copy; {new Date().getFullYear()} ConnectHub. All rights reserved.
+          &copy; {new Date().getFullYear()} Peerly. All rights reserved.
         </div>
       </div>
     </footer>
