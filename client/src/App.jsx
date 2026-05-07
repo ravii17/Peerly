@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import FeaturesPage from './pages/FeaturesPage.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 
@@ -66,6 +67,19 @@ export default function App() {
                     transition={{ duration: 0.35, ease: 'easeOut' }}
                   >
                     <FeaturesPage />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/contact"
+                element={
+                  <motion.div
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                  >
+                    <ContactPage />
                   </motion.div>
                 }
               />
