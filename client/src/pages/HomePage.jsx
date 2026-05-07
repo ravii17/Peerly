@@ -65,7 +65,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. Feature Cards Section */}
-      <section id="features" className="mx-auto max-w-6xl px-4 py-32 relative">
+      <section id="features" className="mx-auto max-w-6xl px-4 py-32 relative scroll-mt-32">
         <div className="absolute inset-0 top-1/2 -z-10 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent blur-3xl opacity-50 rounded-full" />
         
         <ScrollReveal className="text-center mb-16">
@@ -106,7 +106,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. Testimonials Section */}
-      <section className="mx-auto max-w-6xl px-4 py-24 relative">
+      <section id="about" className="mx-auto max-w-6xl px-4 py-24 relative scroll-mt-32">
         <div className="absolute left-0 top-0 -z-10 bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl opacity-30 h-full w-1/2" />
         <ScrollReveal className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Loved by our community</h2>
@@ -152,6 +152,32 @@ export default function HomePage() {
             </ScrollReveal>
           ))}
         </div>
+      </section>
+
+      {/* 5. Contact Section */}
+      <section id="contact" className="mx-auto max-w-4xl px-4 py-24 text-center scroll-mt-32">
+        <ScrollReveal>
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur-xl shadow-2xl shadow-black/20">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Contact</h2>
+            <p className="text-white/60 mb-8 max-w-2xl mx-auto">
+              Have a question, partnership idea, or feedback? Reach out and we’ll get back to you.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="mailto:hello@peerly.com"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all hover:scale-105 hover:shadow-indigo-500/40 active:scale-95"
+              >
+                Email Us
+              </a>
+              <Link
+                to="/register/student"
+                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-lg transition-all hover:bg-white/10 hover:border-white/20 active:scale-95"
+              >
+                Join Peerly
+              </Link>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* Final CTA */}
