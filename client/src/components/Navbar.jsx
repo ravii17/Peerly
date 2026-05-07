@@ -22,6 +22,19 @@ function NavLink({ to, children, isHovered, onHover }) {
       >
         {children}
       </motion.div>
+
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            className="absolute -bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 shadow-[0_0_18px_rgba(168,85,247,0.55)]"
+            initial={{ opacity: 0, scaleX: 0.6 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            exit={{ opacity: 0, scaleX: 0.6 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            style={{ originX: 0.5 }}
+          />
+        )}
+      </AnimatePresence>
       
       <AnimatePresence>
         {isHovered && (
@@ -49,8 +62,8 @@ export default function Navbar() {
   });
 
   const links = [
-    { name: 'Features', path: '#features' },
-    { name: 'About', path: '#about' },
+    { name: 'Features', path: '/features' },
+    { name: 'About', path: '/about' },
     { name: 'Contact', path: '#contact' },
   ];
 
