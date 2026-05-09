@@ -18,11 +18,11 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-[#070A12] text-white selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-black text-white selection:bg-[#0071E3]/30">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="blob -top-24 -left-24 h-[22rem] w-[22rem] rounded-full bg-fuchsia-500/20" />
-        <div className="blob top-24 right-[-6rem] h-[26rem] w-[26rem] rounded-full bg-indigo-500/20 [animation-delay:-4s]" />
-        <div className="blob bottom-[-8rem] left-1/3 h-[24rem] w-[24rem] rounded-full bg-purple-500/20 [animation-delay:-8s]" />
+        <div className="blob -top-24 -left-24 h-[30rem] w-[30rem] rounded-full bg-[#0071E3]/15" />
+        <div className="blob top-24 right-[-6rem] h-[35rem] w-[35rem] rounded-full bg-[#BF40BF]/15 [animation-delay:-4s]" />
+        <div className="blob bottom-[-8rem] left-1/3 h-[32rem] w-[32rem] rounded-full bg-[#5AC8FA]/15 [animation-delay:-8s]" />
       </div>
 
       <div className="relative flex min-h-screen flex-col">
