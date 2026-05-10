@@ -3,48 +3,13 @@ import { motion } from 'framer-motion';
 import { MessageSquare, Video, UserCircle, Activity, Star, ChevronRight } from 'lucide-react';
 import FeatureCard from '../components/FeatureCard';
 import ScrollReveal from '../components/ScrollReveal';
+import AntigravityHero from '../components/AntigravityHero';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen pt-32 pb-10 overflow-hidden bg-black">
-      {/* 1. Hero Section */}
-      <section className="mx-auto max-w-5xl px-4 pt-10 pb-24 text-center">
-        <ScrollReveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-[13px] font-medium text-[#86868B] backdrop-blur-xl mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5AC8FA] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0071E3]"></span>
-            </span>
-            ✨ Live networking platform
-          </div>
-          
-          <h1 className="text-balance text-6xl font-extrabold tracking-tight sm:text-7xl lg:text-8xl mb-8 relative text-white">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0071E3] to-[#BF40BF] blur-[120px] opacity-20 -z-10" />
-            Connect Students & <br className="hidden sm:block" />
-            <span className="text-gradient">Professionals</span> Seamlessly
-          </h1>
-          
-          <p className="mx-auto max-w-2xl text-pretty text-xl text-[#86868B] leading-relaxed mb-12 font-medium">
-            A premium network designed for the modern era. Find mentors, get referrals, and collaborate instantly through high-quality chat and video calls.
-          </p>
-          
-          <div className="flex flex-col gap-4 sm:flex-row justify-center items-center">
-            <Link
-              to="/register/student"
-              className="inline-flex items-center justify-center rounded-full bg-[#0071E3] px-10 py-4 text-sm font-bold text-white shadow-lg shadow-[#0071E3]/25 transition-all hover:bg-[#0077ED] hover:scale-[1.02] active:scale-95 group"
-            >
-              Get Started
-              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              to="#features"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-10 py-4 text-sm font-bold text-white backdrop-blur-lg transition-all hover:bg-white/10 active:scale-95"
-            >
-              Explore Features
-            </Link>
-          </div>
-        </ScrollReveal>
-      </section>
+    <main className="min-h-screen pt-16 pb-10 overflow-hidden bg-white">
+      {/* 1. Antigravity Hero Section */}
+      <AntigravityHero />
 
       {/* 2. Trust Section */}
       <section className="bg-[#1D1D1F] py-16">
