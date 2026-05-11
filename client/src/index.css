@@ -99,7 +99,50 @@ body {
   box-shadow: 0 0 40px -10px var(--accent-blue), 0 0 40px -10px var(--accent-purple);
 }
 
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-float-slow {
+  animation: float 10s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* Glassmorphism Icon */
+.glass-icon {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 113, 227, 0.2);
+}
+
 ::selection {
   background: rgba(0, 113, 227, 0.3);
   color: white;
 }
+
