@@ -160,7 +160,7 @@ export default function HomePage() {
         
         <ScrollReveal className="text-center mb-24">
           <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-8 text-white">Loved by our <br /> community</h2>
-          <p className="text-[#86868B] text-xl max-w-2xl mx-auto font-medium leading-relaxed">See what students and professionals are saying about their experience on Peerly.</p>
+          <p className="text-[#86868B] text-xl max-w-2xl mx-auto font-medium leading-relaxed">See what students and mentors are saying about their experience on Peerly.</p>
         </ScrollReveal>
 
         <div className="grid gap-10 md:grid-cols-3">

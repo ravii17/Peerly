@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 function GlassShell({ children }) {
   return (
@@ -50,22 +51,47 @@ export default function RegisterPage() {
     }
   }
 
-  const orgLabel = normalizedRole === 'professional' ? 'Company' : 'College'
+  const orgLabel = normalizedRole === 'professional' ? 'Current Company / Expertise' : 'University / College'
   const orgPlaceholder =
-    normalizedRole === 'professional' ? 'e.g., Google' : 'e.g., IIT Bombay'
+    normalizedRole === 'professional' ? 'e.g., Senior Engineer at Google' : 'e.g., IIT Bombay'
 
   return (
     <GlassShell>
-      <div className="space-y-1">
+      <div className="space-y-1 mb-8">
         <div className="text-sm text-white/70">Let’s get you started</div>
-        <h2 className="text-2xl font-semibold tracking-tight">
-          Register as {normalizedRole === 'professional' ? 'Professional' : 'Student'}
+        <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
+          Create Account
         </h2>
       </div>
 
-      <form className="mt-8 space-y-5" onSubmit={onSubmit}>
+      {/* Role Toggle Switch */}
+      <div className="flex p-1 bg-white/5 rounded-2xl border border-white/10 mb-8 relative">
+        <motion.div
+          className="absolute top-1 bottom-1 left-1 rounded-xl bg-white shadow-lg"
+          initial={false}
+          animate={{
+            x: normalizedRole === 'student' ? '0%' : '100%',
+            width: 'calc(50% - 4px)'
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        />
+        <button
+          onClick={() => navigate('/register/student')}
+          className={`relative z-10 flex-1 py-2.5 text-sm font-bold transition-colors duration-200 ${normalizedRole === 'student' ? 'text-black' : 'text-[#86868B] hover:text-white'}`}
+        >
+          Student
+        </button>
+        <button
+          onClick={() => navigate('/register/professional')}
+          className={`relative z-10 flex-1 py-2.5 text-sm font-bold transition-colors duration-200 ${normalizedRole === 'professional' ? 'text-black' : 'text-[#86868B] hover:text-white'}`}
+        >
+          Mentor
+        </button>
+      </div>
+
+      <form className="space-y-5" onSubmit={onSubmit}>
         <label className="block space-y-2">
-          <div className="text-[13px] font-bold text-[#86868B]">Name</div>
+          <div className="text-[13px] font-bold text-[#86868B] ml-1">Full Name</div>
           <input
             className="w-full rounded-2xl border border-white/5 bg-white/5 px-5 py-4 text-sm outline-none transition-all placeholder:text-white/20 focus:border-[#0071E3]/50 focus:bg-white/10"
             placeholder="Your name"
@@ -76,7 +102,7 @@ export default function RegisterPage() {
         </label>
 
         <label className="block space-y-2">
-          <div className="text-[13px] font-bold text-[#86868B]">Email</div>
+          <div className="text-[13px] font-bold text-[#86868B] ml-1">Email Address</div>
           <input
             className="w-full rounded-2xl border border-white/5 bg-white/5 px-5 py-4 text-sm outline-none transition-all placeholder:text-white/20 focus:border-[#0071E3]/50 focus:bg-white/10"
             placeholder="you@example.com"
@@ -88,7 +114,7 @@ export default function RegisterPage() {
         </label>
 
         <label className="block space-y-2">
-          <div className="text-[13px] font-bold text-[#86868B]">Password</div>
+          <div className="text-[13px] font-bold text-[#86868B] ml-1">Password</div>
           <input
             className="w-full rounded-2xl border border-white/5 bg-white/5 px-5 py-4 text-sm outline-none transition-all placeholder:text-white/20 focus:border-[#0071E3]/50 focus:bg-white/10"
             placeholder="Create a strong password"
@@ -101,7 +127,7 @@ export default function RegisterPage() {
         </label>
 
         <label className="block space-y-2">
-          <div className="text-[13px] font-bold text-[#86868B]">{orgLabel}</div>
+          <div className="text-[13px] font-bold text-[#86868B] ml-1">{orgLabel}</div>
           <input
             className="w-full rounded-2xl border border-white/5 bg-white/5 px-5 py-4 text-sm outline-none transition-all placeholder:text-white/20 focus:border-[#0071E3]/50 focus:bg-white/10"
             placeholder={orgPlaceholder}
@@ -123,11 +149,18 @@ export default function RegisterPage() {
         ) : null}
 
         <button
-          className="inline-flex w-full items-center justify-center rounded-full bg-white px-5 py-4 text-sm font-bold text-black transition hover:bg-[#F5F5F7] disabled:opacity-60 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          className="inline-flex w-full items-center justify-center rounded-full bg-white px-5 py-4 text-sm font-bold text-black transition hover:bg-[#F5F5F7] disabled:opacity-60 shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-[0.98]"
           disabled={isLoading}
           type="submit"
         >
-          {isLoading ? 'Creating account…' : 'Create account'}
+          {isLoading ? (
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
+              <span>Creating account…</span>
+            </div>
+          ) : (
+            'Create account'
+          )}
         </button>
       </form>
 
