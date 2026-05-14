@@ -13,10 +13,8 @@ import {
   ChevronRight,
   Plus,
   CheckCircle2,
-  Github,
-  Linkedin,
-  MapPin,
-  Clock,
+  Terminal,
+  Globe,
   Sparkles
 } from 'lucide-react';
 
@@ -56,7 +54,7 @@ const QuickAction = ({ icon: Icon, label }) => (
   </motion.button>
 );
 
-const MentorCard = ({ name, role, company, rating, experience, image }) => (
+const MentorCard = ({ name, role, company, rating, experience }) => (
   <motion.div 
     initial={{ opacity: 0, scale: 0.95 }}
     whileInView={{ opacity: 1, scale: 1 }}
@@ -267,14 +265,14 @@ export default function DashboardPage() {
         <section className="glass-card p-6 rounded-[32px] flex flex-col gap-4">
            <a href="#" className="flex items-center justify-between group">
              <div className="flex items-center gap-3">
-               <div className="p-2 rounded-lg bg-zinc-800 text-zinc-400 group-hover:text-white transition-colors"><Github className="w-4 h-4" /></div>
+               <div className="p-2 rounded-lg bg-zinc-800 text-zinc-400 group-hover:text-white transition-colors"><Terminal className="w-4 h-4" /></div>
                <span className="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">GitHub Profile</span>
              </div>
              <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:translate-x-1 transition-transform" />
            </a>
            <a href="#" className="flex items-center justify-between group">
              <div className="flex items-center gap-3">
-               <div className="p-2 rounded-lg bg-[#0077B5]/20 text-[#0077B5] group-hover:text-white transition-colors"><Linkedin className="w-4 h-4" /></div>
+               <div className="p-2 rounded-lg bg-[#0077B5]/20 text-[#0077B5] group-hover:text-white transition-colors"><Globe className="w-4 h-4" /></div>
                <span className="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">LinkedIn Profile</span>
              </div>
              <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:translate-x-1 transition-transform" />

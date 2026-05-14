@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MessageSquare, Video, UserCircle, Activity, Star, ChevronRight, Sparkles, Compass, Shield, Zap } from 'lucide-react';
+import { ChevronRight, Sparkles, Compass, Shield, Zap } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 
 export default function HomePage({ isLoggedIn }) {

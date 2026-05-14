@@ -39,7 +39,7 @@ export default function LoginPage({ onLogin }) {
       await new Promise((r) => setTimeout(r, 1000))
       onLogin() // Set global state
       navigate('/dashboard', { replace: true })
-    } catch (err) {
+    } catch {
       setError('Login failed. Please check your credentials.')
     } finally {
       setIsLoading(false)

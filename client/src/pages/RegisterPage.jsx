@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Shield, Mail, Lock, User, Briefcase, GraduationCap, Sparkles, ChevronRight } from 'lucide-react'
+import { Mail, Lock, User, Briefcase, GraduationCap, Sparkles, ChevronRight } from 'lucide-react'
 
 function GlassShell({ children }) {
   return (
@@ -47,7 +47,7 @@ export default function RegisterPage({ onLogin }) {
       setTimeout(() => {
         navigate(`/dashboard`, { replace: true })
       }, 1500)
-    } catch (err) {
+    } catch {
       setError('Registration failed. Please try again.')
       setIsLoading(false)
     }
