@@ -63,6 +63,7 @@ export default function Navbar({ isLoggedIn, onLogout }) {
 
   const visitorLinks = [
     { name: 'Features', path: '/#features', icon: Zap },
+    { name: 'Explore', path: '/explore', icon: Compass },
     { name: 'About', path: '/#about', icon: Info },
     { name: 'Contact', path: '/#contact', icon: Mail },
   ];
