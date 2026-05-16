@@ -10,6 +10,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import FeaturesPage from './pages/FeaturesPage';
 import ExplorePage from './pages/ExplorePage';
+import MySessionsPage from './pages/MySessionsPage';
 import { ScrollToTop } from './components/ScrollReveal';
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/sessions" element={<MySessionsPage />} />
         
         <Route 
           path="/login/:role?" 
