@@ -35,7 +35,9 @@ import {
   Lock,
   Globe,
   Radio,
-  FileText
+  FileText,
+  Maximize2,
+  ChevronUp
 } from 'lucide-react';
 
 // --- Mock Data ---
@@ -237,7 +239,10 @@ export default function CommunityPage() {
   const [view, setView] = useState('Feed'); // 'Feed' or 'Chat'
   const [message, setMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isImmersive, setIsImmersive] = useState(false);
   const chatEndRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const lastScrollY = useRef(0);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -247,18 +252,135 @@ export default function CommunityPage() {
     if (view === 'Chat') scrollToBottom();
   }, [view]);
 
+  // Handle Immersive Mode on Scroll
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const globalNav = document.querySelector('nav.fixed.top-0');
+
+    const handleScroll = () => {
+      const currentScrollY = container.scrollTop;
+      
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling Down - Enter Immersive Mode
+        if (!isImmersive) {
+          setIsImmersive(true);
+          if (globalNav) {
+            globalNav.style.transform = 'translateY(-100%)';
+            globalNav.style.opacity = '0';
+          }
+        }
+      } else if (currentScrollY < lastScrollY.current || currentScrollY < 50) {
+        // Scrolling Up - Exit Immersive Mode
+        if (isImmersive) {
+          setIsImmersive(false);
+          if (globalNav) {
+            globalNav.style.transform = 'translateY(0)';
+            globalNav.style.opacity = '1';
+          }
+        }
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      if (globalNav) {
+        globalNav.style.transform = 'translateY(0)';
+        globalNav.style.opacity = '1';
+      }
+    };
+  }, [isImmersive]);
+
   const currentCommunity = useMemo(() => COMMUNITIES.find(c => c.id === activeCommunity), [activeCommunity]);
 
+  // Animation Variants
+  const sidebarVariants = {
+    visible: { opacity: 1, x: 0, width: '320px', display: 'flex', transition: { duration: 0.4, ease: 'easeInOut' } },
+    hidden: { opacity: 0, x: -50, width: 0, transition: { duration: 0.4, ease: 'easeInOut' }, transitionEnd: { display: 'none' } }
+  };
+
+  const trendingVariants = {
+    visible: { opacity: 1, x: 0, width: '320px', display: 'flex', transition: { duration: 0.4, ease: 'easeInOut' } },
+    hidden: { opacity: 0, x: 50, width: 0, transition: { duration: 0.4, ease: 'easeInOut' }, transitionEnd: { display: 'none' } }
+  };
+
+  const headerVariants = {
+    visible: { y: 0, opacity: 1, height: 'auto', transition: { duration: 0.3 } },
+    hidden: { y: -100, opacity: 0, height: 0, transition: { duration: 0.3 } }
+  };
+
   return (
-    <div className="min-h-screen bg-[#030303] pt-28 pb-20 px-6 overflow-hidden">
+    <div className="min-h-screen bg-[#030303] pt-28 pb-20 px-6 overflow-hidden flex flex-col items-center">
+      
+      {/* Immersive Mode Header Indicator */}
+      <AnimatePresence>
+        {isImmersive && (
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-4 px-6 py-3 glass-panel rounded-full shadow-2xl border-white/10"
+          >
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white" style={{ backgroundColor: currentCommunity.color + '20' }}>
+               <currentCommunity.icon className="w-4 h-4" style={{ color: currentCommunity.color }} />
+            </div>
+            <h3 className="text-sm font-black text-white whitespace-nowrap">{currentCommunity.name}</h3>
+            <div className="w-px h-4 bg-white/10" />
+            <div className="flex items-center gap-2">
+               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{view} Mode</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Minimal Dock (Focus Mode) */}
+      <AnimatePresence>
+        {isImmersive && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-2 p-2 glass-panel rounded-[24px] shadow-2xl border-white/10"
+          >
+             {[
+               { icon: Compass, label: 'Explore', onClick: () => setIsImmersive(false) },
+               { icon: Bell, label: 'Notifications' },
+               { icon: Search, label: 'Search' },
+               { icon: Users, label: 'Members' },
+               { icon: ChevronUp, label: 'Scroll Top', onClick: () => scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' }) }
+             ].map((btn, i) => (
+               <button 
+                 key={i}
+                 onClick={btn.onClick}
+                 className="p-3 rounded-2xl hover:bg-white/10 text-zinc-400 hover:text-white transition-all group relative"
+               >
+                  <btn.icon className="w-5 h-5" />
+                  <span className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-black/90 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-white/10">
+                    {btn.label}
+                  </span>
+               </button>
+             ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Background Decor */}
       <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-[#007AFF]/5 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto flex gap-8 h-[calc(100vh-180px)]">
+      <div className={`max-w-7xl mx-auto flex gap-8 h-[calc(100vh-180px)] transition-all duration-500 ${isImmersive ? 'w-full' : 'max-w-7xl'}`}>
         
         {/* Left Sidebar: Communities List */}
-        <aside className="w-80 flex flex-col gap-6 overflow-y-auto no-scrollbar pr-2">
+        <motion.aside 
+          variants={sidebarVariants}
+          animate={isImmersive ? 'hidden' : 'visible'}
+          className="flex flex-col gap-6 overflow-y-auto no-scrollbar pr-2"
+        >
            <div className="space-y-4">
               <div className="flex items-center justify-between px-2">
                 <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Your Communities</h3>
@@ -296,12 +418,19 @@ export default function CommunityPage() {
                  Explore Communities
               </button>
            </div>
-        </aside>
+        </motion.aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 flex flex-col glass-card rounded-[40px] overflow-hidden relative">
-           {/* Community Header */}
-           <header className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02] backdrop-blur-md sticky top-0 z-20">
+        <main className={`flex-1 flex flex-col glass-card rounded-[40px] overflow-hidden relative transition-all duration-500 ${
+          isImmersive ? 'max-w-3xl mx-auto shadow-[0_0_60px_rgba(0,122,255,0.1)] border-white/10' : 'border-white/5'
+        }`}>
+           
+           {/* Community Header (Hide on Immersive) */}
+           <motion.header 
+             variants={headerVariants}
+             animate={isImmersive ? 'hidden' : 'visible'}
+             className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02] backdrop-blur-md sticky top-0 z-20 overflow-hidden"
+           >
               <div className="flex items-center gap-4">
                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white" style={{ backgroundColor: currentCommunity.color + '20', border: `1px solid ${currentCommunity.color}40` }}>
                     <currentCommunity.icon className="w-6 h-6" style={{ color: currentCommunity.color }} />
@@ -344,12 +473,15 @@ export default function CommunityPage() {
                     <Search className="w-5 h-5" />
                  </button>
               </div>
-           </header>
+           </motion.header>
 
            {/* Content List */}
-           <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-8">
+           <div 
+            ref={scrollContainerRef}
+            className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-8 relative"
+           >
               {view === 'Feed' ? (
-                <div className="space-y-8">
+                <div className={`space-y-8 transition-all duration-500 ${isImmersive ? 'px-4' : ''}`}>
                    {/* Create Post Input */}
                    <div className="glass-card p-6 rounded-[32px] flex gap-4 border-dashed border-[#007AFF]/30">
                       <div className="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center border border-white/10">
@@ -374,7 +506,7 @@ export default function CommunityPage() {
                 </div>
               ) : (
                 <div className="flex flex-col h-full">
-                   <div className="flex-1 space-y-6 pb-20">
+                   <div className={`flex-1 space-y-6 pb-20 transition-all duration-500 ${isImmersive ? 'px-4' : ''}`}>
                       <div className="flex flex-col items-center py-12 text-center">
                          <div className="w-20 h-20 rounded-3xl flex items-center justify-center text-white mb-6" style={{ backgroundColor: currentCommunity.color + '20', border: `1px solid ${currentCommunity.color}40` }}>
                             <currentCommunity.icon className="w-10 h-10" style={{ color: currentCommunity.color }} />
@@ -390,7 +522,7 @@ export default function CommunityPage() {
                    </div>
 
                    {/* Chat Input */}
-                   <div className="absolute bottom-6 left-6 right-6 z-30">
+                   <div className={`absolute bottom-6 left-6 right-6 z-30 transition-all duration-500 ${isImmersive ? 'px-4 bottom-8' : ''}`}>
                       <div className="glass-panel p-2 rounded-2xl flex items-center gap-2 border border-white/10 shadow-2xl">
                          <button className="p-3 rounded-xl hover:bg-white/5 text-zinc-500 hover:text-[#007AFF] transition-all">
                             <Plus className="w-5 h-5" />
@@ -421,7 +553,11 @@ export default function CommunityPage() {
         </main>
 
         {/* Right Sidebar: Trending & AI Assistant */}
-        <aside className="w-80 flex flex-col gap-8 overflow-y-auto no-scrollbar pb-10">
+        <motion.aside 
+          variants={trendingVariants}
+          animate={isImmersive ? 'hidden' : 'visible'}
+          className="flex flex-col gap-8 overflow-y-auto no-scrollbar pb-10"
+        >
            
            {/* AI Assistant Section */}
            <section className="glass-card p-6 rounded-[32px] relative overflow-hidden border-[#007AFF]/20 shadow-[0_0_40px_rgba(0,122,255,0.1)]">
@@ -497,7 +633,7 @@ export default function CommunityPage() {
               </div>
            </section>
 
-        </aside>
+        </motion.aside>
 
       </div>
 

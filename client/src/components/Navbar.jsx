@@ -58,7 +58,6 @@ export default function Navbar({ isLoggedIn, onLogout }) {
     { name: 'Explore', path: '/explore', icon: Compass },
     { name: 'My Sessions', path: '/sessions', icon: Calendar },
     { name: 'Community', path: '/community', icon: Users },
-    { name: 'Resources', path: '/resources', icon: BookOpen },
   ];
 
   const visitorLinks = [
@@ -84,7 +83,7 @@ export default function Navbar({ isLoggedIn, onLogout }) {
           </Link>
 
           {/* Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-2">
             {(isLoggedIn ? loggedInLinks : visitorLinks).map((link) => (
               <NavLink key={link.path} to={link.path} icon={link.icon}>
                 {link.name}
