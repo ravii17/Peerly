@@ -74,7 +74,7 @@ export default function Navbar({ isLoggedIn, onLogout }) {
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#007AFF] to-[#7000FF] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#9D00FF] to-[#00E5FF] flex items-center justify-center shadow-[0_0_15px_rgba(157,0,255,0.4)] group-hover:scale-110 transition-transform">
               <span className="font-bold text-white text-lg">M</span>
             </div>
             <span className="text-lg font-bold tracking-tight text-white hidden md:block">
@@ -106,9 +106,9 @@ export default function Navbar({ isLoggedIn, onLogout }) {
                 </div>
 
                 {/* Notifications */}
-                <button className="relative p-2 rounded-xl hover:bg-white/5 transition-colors">
-                  <Bell className="w-5 h-5 text-zinc-400" />
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#030303]" />
+                <button className="relative p-2 rounded-xl hover:bg-white/5 hover:shadow-[0_0_15px_rgba(157,0,255,0.2)] transition-all">
+                  <Bell className="w-5 h-5 text-zinc-400 group-hover:text-white" />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-[#00E5FF] rounded-full border-2 border-[#050505] shadow-[0_0_8px_rgba(0,229,255,0.6)]" />
                 </button>
 
                 {/* Profile Dropdown */}

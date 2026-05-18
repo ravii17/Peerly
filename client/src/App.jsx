@@ -30,7 +30,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white selection:bg-[#007AFF]/30">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#9D00FF]/30">
       <ScrollToTop />
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       

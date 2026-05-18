@@ -2,14 +2,16 @@
 @import "tailwindcss";
 
 :root {
-  --bg-matte: #030303;
-  --bg-card: rgba(13, 13, 13, 0.7);
+  --bg-matte: #050505;
+  --bg-card: rgba(10, 10, 10, 0.7);
   --text-primary: #FFFFFF;
   --text-secondary: #949494;
-  --accent-blue: #007AFF;
-  --accent-blue-glow: rgba(0, 122, 255, 0.3);
+  --accent-purple: #9D00FF;
+  --accent-blue: #00E5FF;
+  --accent-glow: rgba(157, 0, 255, 0.3);
+  --accent-blue-glow: rgba(0, 229, 255, 0.3);
   --border-glass: rgba(255, 255, 255, 0.08);
-  --m5-gradient: linear-gradient(135deg, #007AFF, #7000FF, #00C2FF);
+  --m5-gradient: linear-gradient(135deg, #9D00FF, #00E5FF);
   --glass-bg: rgba(255, 255, 255, 0.03);
 }
 
@@ -30,13 +32,13 @@ body {
 /* Premium Glassmorphism */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-glass);
 }
 
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -44,9 +46,9 @@ body {
 
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(157, 0, 255, 0.3);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-blue-glow);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
 }
 
 /* Gradients */
@@ -68,11 +70,20 @@ body {
 /* Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-20px) scale(1.05); }
+  50% { transform: translateY(-15px) scale(1.02); }
 }
 
 .animate-float {
   animation: float 8s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 
 /* Interactive Cursor Glow */
@@ -80,7 +91,7 @@ body {
   position: fixed;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, var(--accent-blue-glow) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
@@ -117,4 +128,3 @@ body {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
