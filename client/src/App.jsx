@@ -12,6 +12,7 @@ import FeaturesPage from './pages/FeaturesPage';
 import ExplorePage from './pages/ExplorePage';
 import MySessionsPage from './pages/MySessionsPage';
 import CommunityPage from './pages/CommunityPage';
+import MentorProfilePage from './pages/MentorProfilePage';
 import { ScrollToTop } from './components/ScrollReveal';
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/sessions" element={<MySessionsPage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/mentor/:id" element={<MentorProfilePage />} />
         
         <Route 
           path="/login/:role?" 
