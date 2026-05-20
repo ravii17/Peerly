@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, User, Briefcase, GraduationCap, Sparkles, ChevronRight } from 'lucide-react'
+import { Mail, Lock, User, Briefcase, GraduationCap, Sparkles, ChevronRight, Check } from 'lucide-react'
 
 function GlassShell({ children }) {
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-6 py-20 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#007AFF]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#9D00FF]/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="w-full max-w-[480px] relative z-10">
         <div className="glass-card p-10 rounded-[40px] shadow-2xl border-white/10">
           {children}
@@ -20,7 +20,7 @@ export default function RegisterPage({ onLogin }) {
   const { role } = useParams()
   const navigate = useNavigate()
   const normalizedRole = useMemo(() => {
-    if (role === 'professional' || role === 'student') return role
+    if (role === 'mentor' || role === 'student') return role
     return 'student'
   }, [role])
 
@@ -42,32 +42,47 @@ export default function RegisterPage({ onLogin }) {
       // Simulate backend registration call
       await new Promise((r) => setTimeout(r, 1200))
       setIsSuccess(true)
-      onLogin() // Set global state
+      onLogin(normalizedRole) // Set global state
       
       setTimeout(() => {
-        navigate(`/dashboard`, { replace: true })
-      }, 1500)
+        navigate(`/${normalizedRole}/dashboard`, { replace: true })
+      }, 1000)
     } catch {
       setError('Registration failed. Please try again.')
+    } finally {
       setIsLoading(false)
     }
   }
 
-  const orgLabel = normalizedRole === 'professional' ? 'Company / Expertise' : 'University / College'
+  const orgLabel = normalizedRole === 'mentor' ? 'Company / Expertise' : 'University / College'
   const orgPlaceholder =
-    normalizedRole === 'professional' ? 'e.g., Senior Engineer at Stripe' : 'e.g., Stanford University'
+    normalizedRole === 'mentor' ? 'e.g., Senior Engineer at Stripe' : 'e.g., Stanford University'
+
+  if (isSuccess) {
+    return (
+      <GlassShell>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center py-10"
+        >
+          <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Check className="w-10 h-10 text-green-500" />
+          </div>
+          <h2 className="text-3xl font-black text-white mb-2">Account Created!</h2>
+          <p className="text-zinc-500">Redirecting to your dashboard...</p>
+        </motion.div>
+      </GlassShell>
+    )
+  }
 
   return (
     <GlassShell>
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/20 mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
-          <span className="text-[10px] font-bold text-[#007AFF] uppercase tracking-wider">Join Mentor Connect</span>
-        </div>
         <h2 className="text-4xl font-black tracking-tight text-white mb-2">
           Create Account
         </h2>
-        <p className="text-zinc-500 text-sm font-medium">Start your journey with us today.</p>
+        <p className="text-zinc-500 text-sm font-medium">Join the Mentor Connect network.</p>
       </div>
 
       {/* Role Toggle Switch */}
@@ -88,8 +103,8 @@ export default function RegisterPage({ onLogin }) {
           Student
         </button>
         <button
-          onClick={() => navigate('/register/professional')}
-          className={`relative z-10 flex-1 py-3 text-xs font-black uppercase tracking-widest transition-colors duration-200 ${normalizedRole === 'professional' ? 'text-black' : 'text-zinc-500 hover:text-white'}`}
+          onClick={() => navigate('/register/mentor')}
+          className={`relative z-10 flex-1 py-3 text-xs font-black uppercase tracking-widest transition-colors duration-200 ${normalizedRole === 'mentor' ? 'text-black' : 'text-zinc-500 hover:text-white'}`}
         >
           Mentor
         </button>
@@ -101,7 +116,7 @@ export default function RegisterPage({ onLogin }) {
             <User className="w-3 h-3" /> Full Name
           </div>
           <input
-            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#007AFF]/50 focus:bg-white/10"
+            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#9D00FF]/50 focus:bg-white/10"
             placeholder="Ravi Kumar"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -114,7 +129,7 @@ export default function RegisterPage({ onLogin }) {
             <Mail className="w-3 h-3" /> Email Address
           </div>
           <input
-            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#007AFF]/50 focus:bg-white/10"
+            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#9D00FF]/50 focus:bg-white/10"
             placeholder="ravi@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -128,7 +143,7 @@ export default function RegisterPage({ onLogin }) {
             <Lock className="w-3 h-3" /> Password
           </div>
           <input
-            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#007AFF]/50 focus:bg-white/10"
+            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#9D00FF]/50 focus:bg-white/10"
             placeholder="••••••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -140,11 +155,11 @@ export default function RegisterPage({ onLogin }) {
 
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-zinc-500 ml-1">
-            {normalizedRole === 'professional' ? <Briefcase className="w-3 h-3" /> : <GraduationCap className="w-3 h-3" />}
+            {normalizedRole === 'mentor' ? <Briefcase className="w-3 h-3" /> : <GraduationCap className="w-3 h-3" />}
             {orgLabel}
           </div>
           <input
-            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#007AFF]/50 focus:bg-white/10"
+            className="w-full rounded-2xl border border-white/5 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-zinc-700 focus:border-[#9D00FF]/50 focus:bg-white/10"
             placeholder={orgPlaceholder}
             value={org}
             onChange={(e) => setOrg(e.target.value)}
@@ -154,12 +169,6 @@ export default function RegisterPage({ onLogin }) {
         {error && (
           <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-5 py-4 text-xs font-bold text-rose-400">
             {error}
-          </div>
-        )}
-
-        {isSuccess && (
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 py-4 text-xs font-bold text-emerald-400">
-            Welcome to Mentor Connect! Redirecting...
           </div>
         )}
 
@@ -182,7 +191,7 @@ export default function RegisterPage({ onLogin }) {
       <div className="mt-10 text-center text-xs font-bold">
         <span className="text-zinc-500">Already have an account?</span>{' '}
         <Link
-          className="text-white hover:text-[#007AFF] transition-colors underline underline-offset-4"
+          className="text-white hover:text-[#00E5FF] transition-colors underline underline-offset-4"
           to={`/login/${normalizedRole}`}
         >
           Sign in
@@ -191,4 +200,3 @@ export default function RegisterPage({ onLogin }) {
     </GlassShell>
   )
 }
-

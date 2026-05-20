@@ -20,7 +20,7 @@ export default function LoginPage({ onLogin }) {
   const { role } = useParams()
   const navigate = useNavigate()
   const normalizedRole = useMemo(() => {
-    if (role === 'professional' || role === 'student') return role
+    if (role === 'mentor' || role === 'student') return role
     return 'student'
   }, [role])
 
@@ -37,8 +37,8 @@ export default function LoginPage({ onLogin }) {
     try {
       // Simulate backend login call
       await new Promise((r) => setTimeout(r, 1000))
-      onLogin() // Set global state
-      navigate('/dashboard', { replace: true })
+      onLogin(normalizedRole) // Set global state
+      navigate(`/${normalizedRole}/dashboard`, { replace: true })
     } catch {
       setError('Login failed. Please check your credentials.')
     } finally {
@@ -49,9 +49,9 @@ export default function LoginPage({ onLogin }) {
   return (
     <GlassShell>
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/20 mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
-          <span className="text-[10px] font-bold text-[#007AFF] uppercase tracking-wider">Welcome Back</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9D00FF]/10 border border-[#9D00FF]/20 mb-6">
+          <Sparkles className="w-3.5 h-3.5 text-[#00E5FF]" />
+          <span className="text-[10px] font-bold text-[#00E5FF] uppercase tracking-wider">Welcome Back</span>
         </div>
         <h2 className="text-4xl font-black tracking-tight text-white mb-2">
           Sign In
@@ -77,8 +77,8 @@ export default function LoginPage({ onLogin }) {
           Student
         </button>
         <button
-          onClick={() => navigate('/login/professional')}
-          className={`relative z-10 flex-1 py-3 text-xs font-black uppercase tracking-widest transition-colors duration-200 ${normalizedRole === 'professional' ? 'text-black' : 'text-zinc-500 hover:text-white'}`}
+          onClick={() => navigate('/login/mentor')}
+          className={`relative z-10 flex-1 py-3 text-xs font-black uppercase tracking-widest transition-colors duration-200 ${normalizedRole === 'mentor' ? 'text-black' : 'text-zinc-500 hover:text-white'}`}
         >
           Mentor
         </button>
